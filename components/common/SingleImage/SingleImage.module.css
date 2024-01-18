@@ -1,0 +1,16 @@
+/* SingleImage.module.css */
+.imageContainer {
+    margin: 20px;
+}
+
+.image {
+    max-width: 100%;
+}
+
+.title {
+    color: #333;
+}
+
+.explanation {
+    color: #555;
+}
