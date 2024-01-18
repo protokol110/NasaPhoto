@@ -1,14 +1,19 @@
 .container {
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
-    margin: 20px;
 }
 
 .title {
-    color: #333;
+    color: #007acc;
 }
 
 .noImageContainer {
-    margin-top: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .noImageText {

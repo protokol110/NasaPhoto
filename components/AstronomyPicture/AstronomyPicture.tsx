@@ -1,50 +1,72 @@
-// components/AstronomyPicture.tsx
-import React, {useState, useEffect} from 'react';
+// components/AstronomyPicture/AstronomyPicture.tsx
+import React, {useState, useEffect, lazy, Suspense} from 'react';
 import axios from 'axios';
-import DateRangePicker from '../common/DateRangePicker/DateRangePicker';
+import {format, isValid} from 'date-fns';
 import SingleImage from '../common/SingleImage/SingleImage';
-import {format} from 'date-fns';
 import styles from './AstronomyPicture.module.css';
 
-interface PictureData {
+const LazyDateRangePicker = lazy(() => import('../common/DateRangePicker/DateRangePicker'));
+
+export interface PictureData {
     title: string;
     url: string;
     explanation: string;
+    date: Date;
 }
 
 const AstronomyPicture: React.FC = () => {
-    const [pictureData, setPictureData] = useState<PictureData | null>(null);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [pictureDataList, setPictureDataList] = useState<PictureData[]>([]);
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date());
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date());
 
     useEffect(() => {
-        const fetchDataForDate = async () => {
-            const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+        const fetchDataForDateRange = async () => {
+            const formattedStartDate = format(selectedStartDate, 'yyyy-MM-dd');
+
+            if (!isValid(selectedEndDate)) {
+                console.error('Invalid selectedEndDate:', selectedEndDate);
+                return;
+            }
+
+            const formattedEndDate = format(selectedEndDate, 'yyyy-MM-dd');
             const apiKey = '1IuZnGgDrmbejBFV0AjtvUxvXIsrJ7Ise9ol3ygd';
 
             try {
-                const response = await axios.get<PictureData>(
-                    `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${formattedDate}`
+                const response = await axios.get<PictureData[]>(
+                    `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${formattedStartDate}&end_date=${formattedEndDate}`
                 );
-                setPictureData(response.data);
+                setPictureDataList(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
-                setPictureData(null);
+                setPictureDataList([]);
             }
         };
 
-        fetchDataForDate();
-    }, [selectedDate]);
+        fetchDataForDateRange();
+    }, [selectedStartDate, selectedEndDate]);
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Astronomy Picture of the Day</h1>
-            <DateRangePicker
-                selectedDate={selectedDate}
-                onDateChange={(date) => setSelectedDate(date)}
-            />
-            {pictureData ? (
-                <SingleImage pictureData={pictureData}/>
-            ) : null}
+            <h1 className={styles.title}>Astronomy Pictures</h1>
+            <Suspense fallback={<div>Loading...</div>}>
+                <LazyDateRangePicker
+                    startDate={selectedStartDate}
+                    endDate={selectedEndDate}
+                    onDateChange={(start, end) => {
+                        setSelectedStartDate(start);
+                        setSelectedEndDate(end);
+                    }}
+                />
+            </Suspense>
+            {pictureDataList.length > 0 ? (
+                pictureDataList.map((pictureData, index) => (
+                    <SingleImage key={index} pictureData={pictureData}/>
+                ))
+            ) : (
+                <div className={styles.noImageContainer}>
+                    <h2 className={styles.noImageText}>No pictures available for the selected date range</h2>
+                </div>
+            )}
         </div>
     );
 };

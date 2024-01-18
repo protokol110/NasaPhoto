@@ -1,22 +1,38 @@
 // components/common/DateRangePicker.tsx
-import React from 'react';
+import React, {useState} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styles from './DateRangePicker.module.css';
 
 interface DateRangePickerProps {
-    selectedDate: Date;
-    onDateChange: (date: Date) => void;
+    startDate: Date;
+    endDate: Date;
+    onDateChange: (startDate: Date, endDate: Date) => void;
 }
 
-const DateRangePicker: React.FC<DateRangePickerProps> = ({selectedDate, onDateChange}) => {
+const DateRangePicker: React.FC<DateRangePickerProps> = ({startDate, endDate, onDateChange}) => {
+    const [selectedStartDate, setSelectedStartDate] = useState(startDate);
+    const [selectedEndDate, setSelectedEndDate] = useState(endDate);
+
+    const handleDateChange = (dates: [Date, Date] | null) => {
+        if (dates) {
+            const [start, end] = dates;
+            setSelectedStartDate(start);
+            setSelectedEndDate(end);
+            onDateChange(start, end);
+        }
+    };
+
     return (
         <div className={styles.datePickerContainer}>
             <DatePicker
-                selected={selectedDate}
-                onChange={(date: Date) => onDateChange(date as Date)}
-                maxDate={new Date()}
-                style={{width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd'}}
+                selected={selectedStartDate}
+                onChange={handleDateChange}
+                startDate={selectedStartDate}
+                endDate={selectedEndDate}
+                selectsRange
+                inline
+                calendarClassName={styles.datePickerInput}
             />
         </div>
     );
