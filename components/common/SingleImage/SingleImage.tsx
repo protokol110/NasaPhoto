@@ -1,22 +1,27 @@
 import React from 'react';
 import {format} from 'date-fns';
 import styles from './SingleImage.module.css';
-import {PictureData} from '../../AstronomyPicture/AstronomyPicture';
 
 interface SingleImageProps {
-    pictureData: PictureData;
+    pictureData: {
+        title: string;
+        url: string;
+        explanation: string;
+        date: Date;
+    };
+    darkTheme: 'light' | 'dark';
 }
 
-const SingleImage: React.FC<SingleImageProps> = ({pictureData}) => {
-    const dateObject = new Date(pictureData.date);
-
+const SingleImage: React.FC<SingleImageProps> = ({pictureData, darkTheme}) => {
     return (
-        <div className={styles.singleImageContainer}>
+        <div className={`${styles.singleImageContainer} ${styles[darkTheme]}`}>
             <img className={styles.image} src={pictureData.url} alt={pictureData.title}/>
             <div className={styles.imageInfo}>
                 <h2 className={styles.imageTitle}>{pictureData.title}</h2>
-                <p className={styles.imageDate}>{format(dateObject, 'MMMM d, yyyy')}</p>
-                <p className={styles.imageExplanation}>{pictureData.explanation}</p>
+                <p className={`${styles.imageDate} ${styles[darkTheme]}`}>
+                    {format(new Date(pictureData.date), 'MMMM d, yyyy')}
+                </p>
+                <p className={`${styles.imageExplanation} ${styles[darkTheme]}`}>{pictureData.explanation}</p>
             </div>
         </div>
     );

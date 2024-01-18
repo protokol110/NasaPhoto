@@ -1,29 +1,63 @@
 .singleImageContainer {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
     border-radius: 8px;
-    margin-bottom: 20px;
-    padding: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .image {
     max-width: 100%;
     height: auto;
+    border-radius: 8px;
 }
 
 .imageInfo {
-    margin-top: 15px;
+    margin-top: 20px;
+    text-align: left;
 }
 
 .imageTitle {
-    color: #007acc;
+    font-size: 1.5rem;
 }
 
 .imageDate {
-    color: #555;
+    font-size: 1rem;
+    margin-top: 10px;
 }
 
 .imageExplanation {
+    margin-top: 10px;
+}
+
+.light {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: #333;
+}
+
+.light .imageTitle {
+    color: #007acc;
+}
+
+.light .imageDate {
+    color: #555;
+}
+
+.dark {
+    background-color: #333;
+    border: 1px solid #555;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    color: #eee;
+}
+
+.dark .imageTitle {
+    color: #0cf;
+}
+
+.dark .imageDate {
+    color: #aaa;
 }

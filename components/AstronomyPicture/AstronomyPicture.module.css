@@ -1,11 +1,13 @@
 .container {
-    max-width: 800px;
+    max-width: 70%;
     margin: 0 auto;
     text-align: center;
+    padding: 20px;
 }
 
 .title {
     color: #007acc;
+    margin-bottom: 20px;
 }
 
 .noImageContainer {
@@ -14,8 +16,67 @@
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .noImageText {
     color: #555;
+    margin: 0;
 }
+
+.light {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.dark {
+    background-color: #333;
+    color: #fff;
+}
+
+.toggleContainer {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.toggleSwitch {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: background-color 0.3s;
+}
+
+.toggleSwitch:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.dark .toggleSwitch {
+    background-color: #555;
+}
+
+.dark .toggleSwitch:before {
+    transform: translateX(26px);
+}
+
+
+@media (max-width: 767px) {
+    .container {
+        max-width: 90%;
+    }
+}
+

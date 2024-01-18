@@ -1,26 +1,26 @@
 .body {
-    background-color: #f4f4f4; /* Светло-серый фон */
-    color: #333; /* Темный текст */
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 .container {
-    background-color: #fff; /* Белый фон контейнера */
-    border-radius: 8px; /* Закругленные углы */
-    padding: 20px; /* Внутренний отступ */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .title {
-    color: #007acc; /* Цвет заголовка */
+    color: #007acc;
 }
 
 .noImageContainer {
-    background-color: #fff; /* Белый фон для блока без картинок */
+    background-color: #fff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .noImageText {
-    color: #555; /* Цвет текста в блоке без картинок */
+    color: #555;
 }
